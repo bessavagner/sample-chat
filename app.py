@@ -55,7 +55,25 @@ async def websocket_handler(request):
 async def get_messages(request):
     return web.json_response({})
 
-app = web.Application()
+@web.middleware
+async def security_headers_middleware(request, handler):
+    response = await handler(request)
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    
+    csp = (
+        "default-src 'self'; "
+        "style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; "
+        "font-src 'self' https://fonts.gstatic.com; "
+        "img-src 'self' data:; "
+    )
+    response.headers["Content-Security-Policy"] = csp
+    
+    return response
+
+app = web.Application(middlewares=[security_headers_middleware])
 aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader("templates"))
 
 cors = aiohttp_cors.setup(app, defaults={
