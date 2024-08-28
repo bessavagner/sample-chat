@@ -12,6 +12,6 @@ if [ "$PRODUCTION" -eq 1 ]; then
 else
     echo "🚧 ⚙️ Building assets for development mode"
     python -m pip install -r requirements.txt
-    npm install -D tailwindcss
-    npx tailwindcss -i ./src/input.css -o ./src/output.css
+    npm install
+    npm run dev
 fi
