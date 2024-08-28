@@ -88,8 +88,8 @@ async def security_headers_middleware(request, handler):
     response = await handler(request)
     response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     response.headers["X-Frame-Options"] = "DENY"
-    response.headers["X-Content-Type-Options"] = "nosniff"
-    response.headers["Referrer-Policy"] = "no-referrer"
+    # response.headers["X-Content-Type-Options"] = "nosniff"
+    # response.headers["Referrer-Policy"] = "no-referrer"
 
     csp = (
         "default-src 'self'; "
