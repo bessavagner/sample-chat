@@ -98,7 +98,7 @@ async def security_headers_middleware(request, handler):
         "font-src 'self' https://fonts.gstatic.com; "
         "img-src 'self' data:; "
     )
-    response.headers["Content-Security-Policy"] = csp
+    # response.headers["Content-Security-Policy"] = csp
 
     return response
 
