@@ -1,5 +1,9 @@
 # Chat Application Demo
 
+See demo website: [https://sample-chat.onrender.com/](sample-chat.onrender.com/)
+
+![screenshot](screenshot.png)
+
 ## Overview
 
 This is a simple chat application demonstration built using Python with the aiohttp framework and HTML/CSS/JavaScript. The application allows real-time communication between users through WebSockets.
