@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatBox = document.getElementById("chatBox");
     const messageInput = document.getElementById("messageInput");
     const sendButton = document.getElementById("sendButton");
-    const ws = new WebSocket("ws://127.0.0.1:8081/ws");
+    const ws = new WebSocket(`ws://${window.location.origin.split("://")[1]}/ws`);
 
     ws.onmessage = function(event) {
         const data = JSON.parse(event.data);
