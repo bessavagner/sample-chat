@@ -1,26 +1,5 @@
 ###
-# BUILD STAGES
-###
-###
-## NODE BUILD STAGES
-###
-FROM node:18-slim as node_builder
-LABEL stage=node_builder
-
-ENV USER_DIR=/usr
-ENV SRC_DIR="$USER_DIR/src"
-RUN mkdir -p "$SRC_DIR/static/css"
-WORKDIR $SRC_DIR
-
-COPY ./package.json ./
-COPY ./postcss.config.js ./
-COPY ./tailwind.config.js ./
-COPY ./static/css/input.css ./static/css/
-
-RUN npm install && npm run build
-
-###
-## PYTHON BUILD STAGE
+# PYTHON BUILD STAGE
 ###
 FROM python:3.12.3-slim-bookworm as python_builder
 LABEL stage=python_builder
@@ -36,7 +15,7 @@ RUN python3 -m venv /usr/local/.venv && \
     /usr/local/.venv/bin/pip install --no-cache-dir -r requirements.txt && \
     /usr/local/.venv/bin/pip install --no-cache-dir pip-system-certs
 
-# END BUILD STAGES
+# END BUILD STAGE
 ###
 
 ###
@@ -59,7 +38,6 @@ RUN addgroup --gid ${ID_GROUP} ${GROUP} \
 
 COPY ./ $SRC_DIR
 COPY --from=python_builder /usr/local/.venv /usr/local/.venv
-COPY --from=node_builder $SRC_DIR/static/css/styles.css $SRC_DIR/static/css/
 
 RUN chown -R ${ID_USER}:${ID_GROUP} "$SRC_DIR" \
     && chown -R ${ID_USER}:${ID_GROUP} "$USER_DIR/home/" \
