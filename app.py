@@ -77,6 +77,12 @@ async def websocket_handler(request):
 async def get_messages(request):
     return web.json_response({})
 
+async def serve_css(request):
+    filename = request.match_info['filename']
+    return web.FileResponse(path=f'./static/css/{filename}', headers={
+        'Content-Type': 'text/css'
+    })
+
 @web.middleware
 async def security_headers_middleware(request, handler):
     response = await handler(request)
@@ -88,25 +94,13 @@ async def security_headers_middleware(request, handler):
     csp = (
         "default-src 'self'; "
         "connect-src 'self' wss:; "
-        "style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; "
+        "style-src 'self' https://fonts.googleapis.com; "
         "font-src 'self' https://fonts.gstatic.com; "
         "img-src 'self' data:; "
     )
     response.headers["Content-Security-Policy"] = csp
 
     return response
-
-async def serve_static(request):
-    filename = request.match_info['filename']
-    path = request.app['static_root_path'] / filename
-    
-    if filename.endswith('.css'):
-        return web.FileResponse(path, headers={'Content-Type': 'text/css'})
-    elif filename.endswith('.js'):
-        return web.FileResponse(path, headers={'Content-Type': 'application/javascript'})
-    # Add more file types as needed
-    else:
-        return web.FileResponse(path)
 
 app = web.Application(middlewares=[security_headers_middleware])
 aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader("templates"))
@@ -124,7 +118,7 @@ cors.add(app.router.add_static("/static/", path="static", name="static"))
 cors.add(app.router.add_get("/", index))
 cors.add(app.router.add_get("/ws", websocket_handler))
 cors.add(app.router.add_get("/messages", get_messages))
-cors.add(app.router.add_get('/static/{filename}', serve_static))
+cors.add(app.router.add_get('/static/css/{filename}', serve_css))
 
 if __name__ == "__main__":
     host = os.getenv("HOST", "0.0.0.0")
