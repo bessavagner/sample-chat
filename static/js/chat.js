@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatBox = document.getElementById("chatBox");
     const messageInput = document.getElementById("messageInput");
     const sendButton = document.getElementById("sendButton");
-    const ws = new WebSocket("ws://127.0.0.1:8081/ws");
+    const ws = new WebSocket(`ws://${window.location.origin.split("://")[1]}/ws`);
+    const MAX_MESSAGE_SIZE = 2048;
 
     ws.onmessage = function(event) {
         const data = JSON.parse(event.data);
@@ -24,6 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function sendMessage() {
         const message = messageInput.value.trim();
         if (message) {
+
+            if (new Blob([message]).size > MAX_MESSAGE_SIZE) {
+                alert('Message is too long. Please shorten your message.');
+                return;
+            }
             ws.send(JSON.stringify({ type: "message", content: message }));
             addMessageToChat(message, "you");
             messageInput.value = "";

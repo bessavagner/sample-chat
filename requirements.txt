@@ -1,6 +1,9 @@
 aiohappyeyeballs==2.4.0 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:55a1714f084e63d49639800f95716da97a1f173d46a16dfcfda0016abb93b6b2 \
     --hash=sha256:7ce92076e249169a13c2f49320d1967425eaf1f407522d707d59cac7628d62bd
+aiohttp-cors==0.7.0 ; python_version >= "3.12" and python_version < "4.0" \
+    --hash=sha256:0451ba59fdf6909d0e2cd21e4c0a43752bc0703d33fc78ae94d9d9321710193e \
+    --hash=sha256:4d39c6d7100fd9764ed1caf8cebf0eb01bf5e3f24e2e073fda6234bc48b19f5d
 aiohttp-jinja2==1.6 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:0df405ee6ad1b58e5a068a105407dc7dcc1704544c559f1938babde954f945c7 \
     --hash=sha256:a3a7ff5264e5bca52e8ae547bbfd0761b72495230d438d05b6c0915be619b0e2
@@ -338,6 +341,9 @@ multidict==6.0.5 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:fb616be3538599e797a2017cccca78e354c767165e8858ab5116813146041a24 \
     --hash=sha256:fce28b3c8a81b6b36dfac9feb1de115bab619b3c13905b419ec71d03a3fc1423 \
     --hash=sha256:fe5d7785250541f7f5019ab9cba2c71169dc7d74d0f45253f8313f436458a4ef
+python-dotenv==1.0.1 ; python_version >= "3.12" and python_version < "4.0" \
+    --hash=sha256:e324ee90a023d808f1959c46bcbc04446a10ced277783dc6ee09987c37ec10ca \
+    --hash=sha256:f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a
 yarl==1.9.4 ; python_version >= "3.12" and python_version < "4.0" \
     --hash=sha256:008d3e808d03ef28542372d01057fd09168419cdc8f848efe2804f894ae03e51 \
     --hash=sha256:03caa9507d3d3c83bca08650678e25364e1843b484f19986a527630ca376ecce \
