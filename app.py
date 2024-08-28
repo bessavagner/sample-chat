@@ -23,7 +23,7 @@ async def index(request):
 async def websocket_handler(request):
     ws = web.WebSocketResponse()
     await ws.prepare(request)
-    
+
     client_id = str(uuid.uuid4())
     clients[client_id] = ws
     welcome_message = {
@@ -39,26 +39,28 @@ async def websocket_handler(request):
                 if len(msg.data) > MAX_MESSAGE_SIZE:
                     error_message = {
                         "type": "error",
-                        "content": f"Message too large! Limit is {MAX_MESSAGE_SIZE} bytes.",
+                        "content": (
+                            "Message too large! Limit is "
+                            f"{MAX_MESSAGE_SIZE} bytes."
+                        ),
                         "from": "Server"
                     }
                     await ws.send_str(json.dumps(error_message))
                     continue
                 data = json.loads(msg.data)
                 if data["type"] == "message":
-                    # Prepare the message data to be sent
                     message_data = {
                         "type": "message",
                         "content": data["content"],
                         "from": client_id
                     }
-                    
+
                     for cid, client in clients.items():
                         if cid != client_id:
                             await client.send_str(json.dumps(message_data))
     finally:
         clients.pop(client_id, None)
-    
+
     return ws
 
 async def get_messages(request):
@@ -71,7 +73,7 @@ async def security_headers_middleware(request, handler):
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["Referrer-Policy"] = "no-referrer"
-    
+
     csp = (
         "default-src 'self'; "
         "style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; "
@@ -79,7 +81,7 @@ async def security_headers_middleware(request, handler):
         "img-src 'self' data:; "
     )
     response.headers["Content-Security-Policy"] = csp
-    
+
     return response
 
 app = web.Application(middlewares=[security_headers_middleware])
