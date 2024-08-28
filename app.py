@@ -12,13 +12,7 @@ load_dotenv()
 
 clients = {}
 ALLOWED_ORIGINS = os.getenv(
-        'ALLOWED_ORIGINS',
-        (
-            'http://localhost:8081/,'
-            'http://localhost/8080,'
-            'http://0.0.0.0/8080,'
-            'http://0.0.0.0/8081'
-        )
+        'ALLOWED_ORIGINS', 'http://0.0.0.0/8080'
     ).split(',')
 
 @aiohttp_jinja2.template("index.html")
@@ -64,7 +58,6 @@ async def get_messages(request):
 app = web.Application()
 aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader("templates"))
 
-# Setup CORS configuration
 cors = aiohttp_cors.setup(app, defaults={
     origin: aiohttp_cors.ResourceOptions(
         allow_credentials=True,
@@ -74,7 +67,6 @@ cors = aiohttp_cors.setup(app, defaults={
     ) for origin in ALLOWED_ORIGINS
 })
 
-# Add routes with CORS
 cors.add(app.router.add_static("/static/", path="static", name="static"))
 cors.add(app.router.add_get("/", index))
 cors.add(app.router.add_get("/ws", websocket_handler))
