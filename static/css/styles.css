@@ -675,6 +675,7 @@ video {
 @media (min-width: 640px) {
   .main-app {
     margin-top: auto;
+    margin-bottom: 1.25rem;
     height: 850px;
     width: 50%;
   }
@@ -1466,6 +1467,10 @@ video {
 
   .sm\:mr-48 {
     margin-right: 12rem;
+  }
+
+  .sm\:mt-auto {
+    margin-top: auto;
   }
 
   .sm\:hidden {
