@@ -1,6 +1,6 @@
 # Chat Application Demo
 
-See demo website: [https://sample-chat.onrender.com/](sample-chat.onrender.com/)
+See demo website: [sample-chat.onrender.com/](https://sample-chat.onrender.com/)
 
 ![screenshot](screenshot.png)
 
