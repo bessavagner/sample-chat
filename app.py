@@ -11,6 +11,7 @@ import aiohttp_cors
 load_dotenv()
 
 clients = {}
+MAX_MESSAGE_SIZE = int(os.getenv('MAX_MESSAGE_SIZE', '2048'))
 ALLOWED_ORIGINS = os.getenv(
         'ALLOWED_ORIGINS', 'http://0.0.0.0/8080'
     ).split(',')
@@ -35,6 +36,14 @@ async def websocket_handler(request):
     try:
         async for msg in ws:
             if msg.type == aiohttp.WSMsgType.TEXT:
+                if len(msg.data) > MAX_MESSAGE_SIZE:
+                    error_message = {
+                        "type": "error",
+                        "content": f"Message too large! Limit is {MAX_MESSAGE_SIZE} bytes.",
+                        "from": "Server"
+                    }
+                    await ws.send_str(json.dumps(error_message))
+                    continue
                 data = json.loads(msg.data)
                 if data["type"] == "message":
                     # Prepare the message data to be sent
