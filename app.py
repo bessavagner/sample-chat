@@ -1,6 +1,8 @@
+# pylint: disable=w1203
 import os
 import json
 import uuid
+import logging
 import jinja2
 import aiohttp
 import aiohttp_jinja2
@@ -9,6 +11,10 @@ from dotenv import load_dotenv
 import aiohttp_cors
 
 load_dotenv()
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+logging.getLogger('aiohttp.access').setLevel(logging.WARNING)
 
 clients = {}
 MAX_MESSAGE_SIZE = int(os.getenv('MAX_MESSAGE_SIZE', '2048'))
@@ -18,6 +24,7 @@ ALLOWED_ORIGINS = os.getenv(
 
 @aiohttp_jinja2.template("index.html")
 async def index(request):
+    logger.info("Index page accessed")
     return {}
 
 async def websocket_handler(request):
@@ -32,6 +39,7 @@ async def websocket_handler(request):
         "from": "Server"
     }
     await ws.send_str(json.dumps(welcome_message))
+    logger.info(f"New WebSocket connection established with client_id: {client_id}")
 
     try:
         async for msg in ws:
@@ -46,6 +54,7 @@ async def websocket_handler(request):
                         "from": "Server"
                     }
                     await ws.send_str(json.dumps(error_message))
+                    logger.warning(f"Message from client_id {client_id} exceeded size limit.")
                     continue
                 data = json.loads(msg.data)
                 if data["type"] == "message":
@@ -58,8 +67,10 @@ async def websocket_handler(request):
                     for cid, client in clients.items():
                         if cid != client_id:
                             await client.send_str(json.dumps(message_data))
+                    logger.info(f"Message from client_id {client_id}: {data['content']}")
     finally:
         clients.pop(client_id, None)
+        logger.info(f"WebSocket connection closed for client_id: {client_id}")
 
     return ws
 
@@ -104,4 +115,5 @@ cors.add(app.router.add_get("/messages", get_messages))
 if __name__ == "__main__":
     host = os.getenv("HOST", "0.0.0.0")
     port = int(os.getenv("PORT", "8080"))
+    logger.info(f"Starting server on {host}:{port}")
     web.run_app(app, host=host, port=port)
