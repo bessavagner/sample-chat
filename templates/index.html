@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chat Application</title>
+        <link href="/static/css/styles.css?version=29" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/767d170838.js" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+            rel="stylesheet">
+    </head>
+
+    <body class="sm:h-screen flex flex-col justify-center">
+        
+        <div class="hero">
+            <div id="panel" class="panel">
+                <div class="flex flex-col w-3/4 mx-auto sm:ml-5 sm:mr-48 md:mr-36 lg:mr-20 2xl:mx-auto">
+                    <h2 class="text-3xl lg:text-5xl 2xl:text-7xl text-shadow-lg">CHAT APP DEMO</h2>
+                    <p class="text-xl lg:text-3xl 2xl:text-5xl w-full sm:w-3/4 md:w-5/6 z-10">This web application showcases the use of <a class="text-blue-400" href="https://docs.aiohttp.org/en/stable/" target="_blank">aiohttp</a> python library for a server websocket.</p>
+                    <ol class="list-decimal text-md 2xl:text-lg roboto-regular mt-32 md:mr-24 lg:mr-16 2xl:mr-10 ml-5">
+                        <li class="">Open the <a class="text-blue-400" href="/" target="_blank">chat application</a> in two separate tabs/windows/devices.</li>
+                        <li class="">Type messages in one window and see them appear in both.</li>
+                        <li class="">Test sending and receiving messages between clients.</li>
+                    </ol>
+                    <div class="flex flex-col items-end self-end mt-16 sm:mr-36 2xl:mr-30">
+                        <p class="text-right roboto-thin">Developed by
+                            <span class="roboto-bold">VAGNER BESSA</span>
+                        </p>
+                        <button class="w-32 h-12 rounded-lg bg-teal-800 hover:bg-teal-700 text-gray-50">See repository</button>
+                    </div>
+                </div>
+            </div>
+            <a id="scrollLink" href="#panel" class="sm:hidden animate-bounce my-5"><i class="fa-solid fa-angles-down"></i></a>
+            <div class="main-app rounded-3xl">
+                <header class="bg-teal-800 text-gray-200 p-4 shadow-md rounded-t-3xl">
+                    <h1 class="text-2xl roboto-light">Chat Application</h1>
+                </header>
+                <main class="flex-1 p-4 overflow-auto">
+                    <div id="chatBox"
+                        class="relative h-full bg-teal-600 p-4 rounded-lg shadow-md space-y-4 overflow-y-auto">
+                        <!-- Messages will be dynamically inserted here -->
+                    </div>
+                </main>
+                <footer class="bg-gray-800 rounded-b-3xl p-4">
+                    <div class="flex">
+                        <input autofocus="on" id="messageInput" type="text" placeholder="Type a message..."
+                            class="flex-1 p-2 border rounded-lg border-gray-300 bg-gray-500 text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-300">
+                        <button id="sendButton"
+                            class="p-2 ml-2 bg-teal-800 text-gray-200 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-300">Send</button>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script type="module" src="/static/js/chat.js?version=3"></script>
+    </body>
+
+</html>
