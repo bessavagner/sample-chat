@@ -87,6 +87,7 @@ async def security_headers_middleware(request, handler):
 
     csp = (
         "default-src 'self'; "
+        "connect-src 'self' ws:; "
         "style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; "
         "font-src 'self' https://fonts.gstatic.com; "
         "img-src 'self' data:; "
