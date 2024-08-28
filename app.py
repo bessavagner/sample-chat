@@ -53,7 +53,7 @@ async def websocket_handler(request):
     return ws
 
 async def get_messages(request):
-    return web.json_response(chat_messages)
+    return web.json_response({})
 
 app = web.Application()
 aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader("templates"))
