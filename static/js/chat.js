@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatBox = document.getElementById("chatBox");
     const messageInput = document.getElementById("messageInput");
     const sendButton = document.getElementById("sendButton");
-    const ws = new WebSocket(`ws://${window.location.origin.split("://")[1]}/ws`);
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const ws = new WebSocket(`${protocol}//${window.location.host}/ws`);
     const MAX_MESSAGE_SIZE = 2048;
 
     ws.onmessage = function(event) {
