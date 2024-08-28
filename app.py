@@ -96,6 +96,18 @@ async def security_headers_middleware(request, handler):
 
     return response
 
+async def serve_static(request):
+    filename = request.match_info['filename']
+    path = request.app['static_root_path'] / filename
+    
+    if filename.endswith('.css'):
+        return web.FileResponse(path, headers={'Content-Type': 'text/css'})
+    elif filename.endswith('.js'):
+        return web.FileResponse(path, headers={'Content-Type': 'application/javascript'})
+    # Add more file types as needed
+    else:
+        return web.FileResponse(path)
+
 app = web.Application(middlewares=[security_headers_middleware])
 aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader("templates"))
 
@@ -112,6 +124,7 @@ cors.add(app.router.add_static("/static/", path="static", name="static"))
 cors.add(app.router.add_get("/", index))
 cors.add(app.router.add_get("/ws", websocket_handler))
 cors.add(app.router.add_get("/messages", get_messages))
+cors.add(app.router.add_get('/static/{filename}', serve_static))
 
 if __name__ == "__main__":
     host = os.getenv("HOST", "0.0.0.0")
