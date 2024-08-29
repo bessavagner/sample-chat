@@ -6,16 +6,16 @@ fi
 
 
 echo "🔽 ⚙️ Installing tailwindcss"
-npm install
+npm install -D tailwindcss
 
 if [ "$PRODUCTION" -eq 1 ]; then
     echo "🐋 ⚙️ Buiding docker image and styles.css for production mode"
     docker stop sample-chat
     docker rm sample-chat
-    npm run build
     docker build -t sample_chat --rm=true .
+    npx tailwindcss -i ./static/css/input.css -o ./static/css/styles.css --minify
 else
     echo "🚧 ⚙️ Building assets for development mode"
     python -m pip install -r requirements.txt
-    npm run dev
+    npx tailwindcss -i ./static/css/input.css -o ./static/css/styles.css
 fi
