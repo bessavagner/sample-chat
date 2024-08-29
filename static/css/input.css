@@ -1,6 +1,33 @@
+/*
+    This project uses the Roboto font, which is licensed under the
+    Apache License, Version 2.0. You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+*/
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/static/fonts/Roboto-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/static/fonts/Roboto-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/static/fonts/Roboto-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
 
 @layer components {
   .hero {
@@ -33,12 +60,6 @@
   .roboto-regular {
     font-family: "Roboto", sans-serif;
     font-weight: 400;
-    font-style: normal;
-  }
-
-  .roboto-medium {
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
     font-style: normal;
   }
 
