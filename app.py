@@ -108,10 +108,14 @@ cors = aiohttp_cors.setup(app, defaults={
     ) for origin in ALLOWED_ORIGINS
 })
 
-cors.add(app.router.add_static("/static/", path="static", name="static"))
 cors.add(app.router.add_get("/", index))
 cors.add(app.router.add_get("/ws", websocket_handler))
 cors.add(app.router.add_get("/messages", get_messages))
+cors.add(
+    app.router.add_static(
+        "/static", path="./static", name="static", append_version=True
+    )
+)
 
 if __name__ == "__main__":
     host = os.getenv("HOST", "0.0.0.0")
